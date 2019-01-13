@@ -4,7 +4,6 @@ namespace App\Http\Requests\Administrator;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Validations\PrefixValidationRule;
 
 class CompanyRequest extends FormRequest
 {
@@ -22,8 +21,6 @@ class CompanyRequest extends FormRequest
             'phone' => 'required|string|telefone_com_ddd',
 
             'cnpj' => 'required|string|cnpj|unique:companies,cnpj',
-
-            'prefix' => ['required', 'string', 'min:2', 'max:6', new PrefixValidationRule],
             
 
             'addresses' => 'required|array',

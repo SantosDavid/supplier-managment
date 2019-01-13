@@ -16,10 +16,19 @@ Route::group([
     'prefix' => 'administrators',
     'namespace' => 'Administrator',
 ], function () {
-
     Route::resource('admins', 'AdminController', ['only' => ['store', 'destroy']]);
 
-    Route::resource('companies', 'CompanyController');
+    Route::resource('companies', 'CompanyController', ['only' => ['store']]);
+});
+
+Route::group([
+    'middleware' => ['jwt.auth:users'],
+    'prefix' => 'companies',
+    'namespace' => 'Company',
+], function () {
+    Route::resource('suppliers', 'SupplierController');
 });
 
 Route::post('administrators/login', 'Auth\AdministratorController@login');
+
+Route::post('companies/login', 'Auth\UserController@login');

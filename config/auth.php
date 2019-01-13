@@ -40,6 +40,11 @@ return [
             'driver' => 'jwt',
             'provider' => 'admin',
         ],
+
+        'users' => [
+            'driver' => 'jwt',
+            'provider' => 'user',
+        ],
     ],
 
     /*
@@ -64,11 +69,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Administrator\Admin::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        
+        'user' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Company\User::class,
+        ],
     ],
 
     /*

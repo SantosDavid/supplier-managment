@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Administrator\Admin;
 use App\Observers\Administrator\AdminObserver;
-use App\Models\Company\User;
-use App\Observers\Company\UserObserver;
+use App\Models\Company\{User, Supplier};
+use App\Observers\Company\{UserObserver, SupplierObserver};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
         Admin::observe(AdminObserver::class);
 
         User::observe(UserObserver::class);
+
+        Supplier::observe(SupplierObserver::class);
     }
 
     /**

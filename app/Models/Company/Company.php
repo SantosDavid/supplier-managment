@@ -18,4 +18,9 @@ class Company extends Model
     {
         return $this->morphMany(Address::class, 'addresstable');
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
