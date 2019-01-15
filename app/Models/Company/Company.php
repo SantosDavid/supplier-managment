@@ -2,10 +2,12 @@
 
 namespace App\Models\Company;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Address;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Company extends Model
+class Company extends BaseModel
 {
     protected $fillable = [
         'name',

@@ -21,7 +21,9 @@ class SupplierController extends Controller
 
     public function index()
     {
-        return SupplierResource::collection(Supplier::paginate(30));
+        $suppliers = SupplierResource::collection(Supplier::paginate(30));
+        
+        return $this->responseSuccess($suppliers, 201, 'Administrador criado com sucesso!');
     }
 
     public function store(SupplierRequest $request)
@@ -34,10 +36,10 @@ class SupplierController extends Controller
     
             DB::commit();
 
-            return new SupplierResource($supplier);
+            return $this->responseSuccess(new SupplierResource($supplier), 201, 'Administrador criado com sucesso!');
         
         } catch (\Throwable $e) {
-
+            
             return $this->responseError(config('errors.default'));
         }
     }

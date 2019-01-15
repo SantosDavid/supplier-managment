@@ -6,6 +6,7 @@ use DB;
 use App\Http\Requests\Administrator\CompanyRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Company\Company;
+use App\Http\Resources\Company\CompanyResource;
 
 class CompanyController extends Controller
 {
@@ -27,7 +28,11 @@ class CompanyController extends Controller
     
             DB::commit();
 
-            return $this->responseSuccess([], 201, 'Empresa cadastrada com sucesso!');
+            return $this->responseSuccess(
+                new CompanyResource($company), 
+                201, 
+                'Empresa cadastrada com sucesso!'
+            );
         
         } catch (\Throwable $e) {
 

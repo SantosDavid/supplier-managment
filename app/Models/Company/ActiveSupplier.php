@@ -2,9 +2,9 @@
 
 namespace App\Models\Company;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class ActiveSupplier extends Model
+class ActiveSupplier extends BaseModel
 {
     protected $fillable = [
         'token',

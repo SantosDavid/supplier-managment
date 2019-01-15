@@ -2,10 +2,7 @@
 
 namespace App\Models\Company;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Company\Scopes\CompanyScope;
-
-class Supplier extends Model
+class Supplier extends BaseModel
 {
     protected $fillable = [
         'name',
@@ -13,13 +10,6 @@ class Supplier extends Model
         'monthly_payment',
         'company_id',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(new CompanyScope);
-    }
 
     public function actived()
     {
