@@ -26,9 +26,14 @@ Route::group([
     'prefix' => 'companies',
     'namespace' => 'Company',
 ], function () {
-    Route::resource('suppliers', 'SupplierController');
+    Route::resource('suppliers', 'SupplierController', ['except' => ['edit', 'update', 'show']]);
+    
+    Route::get('suppliers/total-monthly-payment', 'SupplierController@totalMonthlyPayment');
 });
 
 Route::post('administrators/login', 'Auth\AdministratorController@login');
 
 Route::post('companies/login', 'Auth\UserController@login');
+
+Route::get('companies/suppliers/activation/{token}', 'Company\ActivationSupplierController@activation')
+    ->name('suppliers.activation');

@@ -9,22 +9,25 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Company\Supplier;
-use App\Mail\ActiveSupplier;
+use App\Mail\ActiveSupplier as Email;
+use App\Models\Company\ActiveSupplier;
 
 class SendEmailSupplier implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $supplier;
+    public $tries = 5;
+    
+    protected $activation;
 
-    public function __construct(Supplier $supplier)
+    public function __construct(ActiveSupplier $activation)
     {
-        $this->supplier = $supplier;
+        $this->activation = $activation;
     }
 
     public function handle()
     {
-        Mail::to($this->supplier->email)
-            ->send(new ActiveSupplier($this->supplier));
+        Mail::to($this->activation->supplier->email)
+            ->send(new Email($this->activation));
     }
 }

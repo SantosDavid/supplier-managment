@@ -11,7 +11,6 @@ class Company extends Model
         'name',
         'phone',
         'cnpj',
-        'prefix',
     ];
 
     public function addresses()

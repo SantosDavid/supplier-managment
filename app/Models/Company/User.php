@@ -5,6 +5,7 @@ namespace App\Models\Company;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Company\Company;
 
 class User  extends Authenticatable implements JWTSubject
 {
@@ -19,8 +20,14 @@ class User  extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
+
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }
