@@ -30,9 +30,11 @@ class SupplierController extends Controller
             
             DB::beginTransaction();
     
-            Supplier::create($request->all());
+            $supplier = Supplier::create($request->all());
     
             DB::commit();
+
+            return new SupplierResource($supplier);
         
         } catch (\Throwable $e) {
 

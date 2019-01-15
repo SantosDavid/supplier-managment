@@ -25,15 +25,19 @@ class ActivationSupplierController extends Controller
 
             $supplier->actived();
 
-            return $this->responseSuccess([], 200, 'Fornecedor ativado com sucesso!');
+            return view('companies.suppliers.actived', compact('supplier'));
 
         } catch (NotFoundResourceException $e) {
 
-            return $this->responseError($e->getMessage(), 404);
+            $error = $e->getMessage();
+
+            return view('companies.suppliers.error', compact('error'));
 
         } catch (\Throwable $e) {
 
-            return $this->responseError(config('errors.default'));
+            $error = config('errors.default');
+
+            return view('companies.suppliers.error', compact('error'));
         }
     }
 }
