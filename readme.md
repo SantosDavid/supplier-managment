@@ -32,6 +32,8 @@
 
     7 - docker-compose run app php artisan migrate --seed
 
+    8 - docker-compose run app vendor/bin/phpunit
+
 
 ### Admin
 

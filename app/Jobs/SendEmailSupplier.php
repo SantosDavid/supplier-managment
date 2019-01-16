@@ -18,7 +18,7 @@ class SendEmailSupplier implements ShouldQueue
 
     public $tries = 5;
     
-    protected $activation;
+    public $activation;
 
     public function __construct(ActiveSupplier $activation)
     {

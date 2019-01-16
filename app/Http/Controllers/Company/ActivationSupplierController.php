@@ -18,7 +18,6 @@ class ActivationSupplierController extends Controller
     public function activation($token)
     {
         try {
-
             if (!$supplier = $this->repository->notVerifiedByToken($token)) {
                 throw new NotFoundResourceException('Ativação não encontrada!');
             }
@@ -26,15 +25,11 @@ class ActivationSupplierController extends Controller
             $supplier->actived();
 
             return view('companies.suppliers.actived', compact('supplier'));
-
         } catch (NotFoundResourceException $e) {
-
             $error = $e->getMessage();
 
             return view('companies.suppliers.error', compact('error'));
-
         } catch (\Throwable $e) {
-
             $error = config('errors.default');
 
             return view('companies.suppliers.error', compact('error'));

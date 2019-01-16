@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Company\Company;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,8 +13,13 @@
 |
  */
 
+ Route::get('teste', function () {
+    return factory(\App\Models\Company\Company::class)->create();
+});
+
+
 Route::group([
-    'middleware' => ['jwt.auth'],
+    'middleware' => ['auth:admins'],
     'prefix' => 'administrators',
     'namespace' => 'Administrator',
 ], function () {
@@ -22,7 +29,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['jwt.auth:users'],
+    'middleware' => ['auth:users'],
     'prefix' => 'companies',
     'namespace' => 'Company',
 ], function () {

@@ -12,7 +12,7 @@ class ActiveSupplier extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $activation;
+    public $activation;
 
     public function __construct(Activation $activation)
     {

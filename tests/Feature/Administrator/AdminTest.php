@@ -10,33 +10,34 @@ class AdminTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $admin;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->admin = factory(Admin::class)->create();
+    }
+
     public function testCreateAdminWithWrongData()
     {
-        $data = [
+        $admin = [
             'email' => 'test',
             'password' => '1',
         ];
 
-        $admin = factory(Admin::class)->create();
-
-        $response = $this->actingAs($admin, 'admins')
-            ->json('POST', 'api/administrators/admins', $data);
+        $response = $this->actingAs($this->admin, 'admins')
+            ->json('POST', 'api/administrators/admins', $admin);
 
         $response->assertStatus(422);
     }
 
     public function testCreateAdmin()
     {
-        $data = [
-            'email' => 'test@test.com.br',
-            'password' => '123456',
-            'password_confirmation' => '123456',
-        ];
+        $admin = factory(Admin::class)->states('create')->raw();
 
-        $admin = factory(Admin::class)->create();
-
-        $response = $this->actingAs($admin, 'admins')
-            ->json('POST', 'api/administrators/admins', $data);
+        $response = $this->actingAs($this->admin, 'admins')
+            ->json('POST', 'api/administrators/admins', $admin);
 
         $response->assertStatus(201);
 
@@ -45,10 +46,8 @@ class AdminTest extends TestCase
 
     public function testDeleteAdmin()
     {
-        $admin = factory(Admin::class)->create();
-
-        $response = $this->actingAs($admin, 'admins')
-            ->json('DELETE', "api/administrators/admins/$admin->id");
+        $response = $this->actingAs($this->admin, 'admins')
+            ->json('DELETE', 'api/administrators/admins/' . $this->admin->id);
 
         $response->assertStatus(200);
 
