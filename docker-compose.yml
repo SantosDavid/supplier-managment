@@ -19,7 +19,7 @@ services:
     volumes:
       - managment-mysql-data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "4000:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=managment
       - MYSQL_DATABASE=managment
@@ -44,7 +44,7 @@ services:
     volumes:
       - .:/var/www/app
     ports:
-      - "80:8080"
+      - "8080:8080"
     links:
       - mysql
       - cache

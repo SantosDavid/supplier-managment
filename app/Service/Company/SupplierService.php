@@ -15,6 +15,10 @@ class SupplierService
 
     public function getTotalMonthlyPayment()
     {
-        return $this->repository->allMonthlyPayment()->sum();
+        return bcdiv(
+            $this->repository->allMonthlyPayment()->sum(), 
+            1, 
+            2
+        );
     }
 }

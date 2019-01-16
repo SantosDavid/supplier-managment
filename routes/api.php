@@ -13,11 +13,6 @@ use App\Models\Company\Company;
 |
  */
 
- Route::get('teste', function () {
-    return factory(\App\Models\Company\Company::class)->create();
-});
-
-
 Route::group([
     'middleware' => ['auth:admins'],
     'prefix' => 'administrators',

@@ -17,7 +17,7 @@ class LoginTest extends TestCase
         'password' => 'test',
     ];
 
-    public function testWithWithUser()
+    public function testWithUser()
     {
         $company = factory(Company::class)->create();
 
