@@ -37,6 +37,7 @@ class SupplierController extends Controller
 
             return $this->responseSuccess(new SupplierResource($supplier), 201, 'Fornecedor criado com sucesso!');
         } catch (\Throwable $e) {
+            DB::rollback();
             return $this->responseError(config('errors.default'));
         }
     }
@@ -56,8 +57,10 @@ class SupplierController extends Controller
 
             return $this->responseSuccess(new SupplierResource($supplier), 200, 'Fornecedor atualizado com sucesso!');
         } catch (ModelNotFoundException $e) {
+            DB::rollback();
             return $this->responseError('Fornecedor não encontrado');
         } catch (\Throwable $e) {
+            DB::rollback();
             return $this->responseError(config('errors.default'));
         }
     }
@@ -69,6 +72,7 @@ class SupplierController extends Controller
 
             return $this->responseSuccess([], 200, 'Fornecedor deletado com sucesso!');
         } catch (\Throwable $e) {
+            DB::rollback();
             return $this->responseError(config('errors.default'));
         }
     }

@@ -33,6 +33,7 @@ class CompanyController extends Controller
                 'Empresa cadastrada com sucesso!'
             );
         } catch (\Throwable $e) {
+            DB::rollback();
             return $this->responseError(config('errors.default'));
         }
     }
