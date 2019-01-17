@@ -16,6 +16,8 @@ class Supplier extends BaseModel
         $this->verified = '1';
 
         $this->save();
+
+        Supplier::all();
     }
 
     public function scopeVerified($q)

@@ -23,7 +23,7 @@ class SupplierController extends Controller
     {
         $suppliers = SupplierResource::collection(Supplier::paginate(30));
 
-        return $this->responseSuccess($suppliers, 201, 'Administrador criado com sucesso!');
+        return $this->responseSuccess($suppliers, 201, 'Fornecedor criado com sucesso!');
     }
 
     public function store(SupplierRequest $request)
@@ -35,7 +35,7 @@ class SupplierController extends Controller
 
             DB::commit();
 
-            return $this->responseSuccess(new SupplierResource($supplier), 201, 'Administrador criado com sucesso!');
+            return $this->responseSuccess(new SupplierResource($supplier), 201, 'Fornecedor criado com sucesso!');
         } catch (\Throwable $e) {
             return $this->responseError(config('errors.default'));
         }
@@ -54,7 +54,7 @@ class SupplierController extends Controller
 
             DB::commit();
 
-            return $this->responseSuccess(new SupplierResource($supplier), 200, 'Administrador criado com sucesso!');
+            return $this->responseSuccess(new SupplierResource($supplier), 200, 'Fornecedor atualizado com sucesso!');
         } catch (ModelNotFoundException $e) {
             return $this->responseError('Fornecedor não encontrado');
         } catch (\Throwable $e) {
