@@ -54,4 +54,4 @@
 
 ### Referência Api
 
-[Docs](https://documenter.getpostman.com/view/2449719/RznJnwcy){:target="_blank"}
+ **[Docs](https://documenter.getpostman.com/view/2449719/RznJnwcy)**
