@@ -22,20 +22,25 @@
 
     2 - docker-compose up
 
-    3 - docker-compose install
+    3 - docker-compose run app composer install
 
     4 - Crie e configure o arquivo .env
 
-    5 - docker-compose php artisan key:generate
+    5 - docker-compose run app php artisan key:generate
 
-    6 - docker-compose php artisan jwt:secret
+    6 - docker-compose run app php artisan jwt:secret
 
     7 - docker-compose run app php artisan migrate --seed
 
-    8 - docker-compose run app vendor/bin/phpunit
+
+## Testes
+
+    1 - docker-compose run app php artisan migrate --seed --env=testing
+    
+    2 - docker-compose run app vendor/bin/phpunit
 
 
-### Admin
+### Acesso
 
 Para cadastrar um empresa é necessário estar logado como administrador.
 
@@ -46,6 +51,7 @@ O admin default é:
 **senha**: 123456
 
 
+
 ### Referência Api
 
- **[Docs](https://documenter.getpostman.com/view/2449719/RznJnwcy)**
+ **[Docs](https://documenter.getpostman.com/view/2449719/RznJnwcy){:target="_blank"}**

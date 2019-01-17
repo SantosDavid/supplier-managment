@@ -3,6 +3,10 @@ version: '2'
 
 # Named volumes
 volumes:
+  # Postgres Data
+  managment-postgres-data:
+    driver: local
+
   # MySQL Data
   managment-mysql-data:
     driver: local
@@ -12,6 +16,18 @@ volumes:
     driver: local
 
 services:
+  postgres:
+      image: postgres:10.3
+      container_name: managment-postgres
+      volumes:
+        - managment-postgres-data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_PASSWORD=managment_test
+        - POSTGRES_DB=managment_test
+        - POSTGRES_USER=managment_test
+
   # MySQL (5.7)
   mysql:
     image: mysql:5.7
@@ -46,6 +62,7 @@ services:
     ports:
       - "8080:8080"
     links:
+      - postgres
       - mysql
       - cache
 
