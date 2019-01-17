@@ -28,7 +28,7 @@ Route::group([
     'prefix' => 'companies',
     'namespace' => 'Company',
 ], function () {
-    Route::resource('suppliers', 'SupplierController', ['except' => ['edit', 'update', 'show']]);
+    Route::resource('suppliers', 'SupplierController', ['except' => ['edit', 'show']]);
     
     Route::get('suppliers/total-monthly-payment', 'SupplierController@totalMonthlyPayment');
 });

@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\SupplierRequest;
 use App\Http\Resources\Company\SupplierResource;
 use App\Models\Company\Supplier;
-use App\Service\Company\SupplierService;
+use App\Service\Company\Contrats\SupplierServiceContract;
 use DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SupplierController extends Controller
 {
     private $service;
 
-    public function __construct(SupplierService $service)
+    public function __construct(SupplierServiceContract $service)
     {
         $this->service = $service;
     }
@@ -35,6 +36,27 @@ class SupplierController extends Controller
             DB::commit();
 
             return $this->responseSuccess(new SupplierResource($supplier), 201, 'Administrador criado com sucesso!');
+        } catch (\Throwable $e) {
+            return $this->responseError(config('errors.default'));
+        }
+    }
+
+    public function update(SupplierRequest $request, $id)
+    {
+        try {
+            $supplier = Supplier::findOrFail($id);
+
+            DB::beginTransaction();
+
+            $supplier->monthly_payment = $request->monthly_payment;
+
+            $supplier->save();
+
+            DB::commit();
+
+            return $this->responseSuccess(new SupplierResource($supplier), 200, 'Administrador criado com sucesso!');
+        } catch (ModelNotFoundException $e) {
+            return $this->responseError('Fornecedor não encontrado');
         } catch (\Throwable $e) {
             return $this->responseError(config('errors.default'));
         }

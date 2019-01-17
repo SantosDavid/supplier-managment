@@ -66,15 +66,45 @@ class SupplierTest extends TestCase
         });
     }
 
+    public function testEditWrongData()
+    {
+        $supplier = factory(Supplier::class)->states('verified')->raw();
+
+        $supplier = array_merge($supplier, ['company_id' => $this->company->id]);
+
+        DB::table('suppliers')->insert($supplier);
+
+        $response = $this->json('PUT', 'api/companies/suppliers/' . $supplier['id']);
+
+        $response->assertStatus(422);
+    }
+
+    public function testEditSuccefull()
+    {
+        $supplier = factory(Supplier::class)->states('verified')->raw();
+
+        $supplier = array_merge($supplier, ['company_id' => $this->company->id]);
+
+        DB::table('suppliers')->insert($supplier);
+
+        $response = $this->json('PUT', 'api/companies/suppliers/' . $supplier['id'], ['monthly_payment' => 320.20]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => ['monthly_payment' => 320.20]
+            ]);
+    }
+
     public function testDelete()
     {
-        $supplier = factory(Supplier::class)->raw();
+        $supplier = factory(Supplier::class)->states('verified')->raw();
 
-        $response = $this->json('POST', 'api/companies/suppliers', $supplier);
+        $supplier = array_merge($supplier, ['company_id' => $this->company->id]);
 
-        $supplier = json_decode($response->getContent())->data;
+        DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('DELETE', 'api/companies/suppliers/' . $supplier->id);
+        $response = $this->json('DELETE', 'api/companies/suppliers/' . $supplier['id']);
 
         $response
             ->assertStatus(200)
