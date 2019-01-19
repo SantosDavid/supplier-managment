@@ -40,7 +40,7 @@ class ActivationSupplierTest extends TestCase
         $this->actingAs($user, 'users');
 
         $response = $this->json(
-            'POST', 
+            'POST',
             "api/" . $company->id . "/suppliers/",
             factory(Supplier::class)->raw()
         );
@@ -49,7 +49,7 @@ class ActivationSupplierTest extends TestCase
 
 
         $response = $this->json(
-            'GET', 
+            'GET',
             $this->endpoint . $supplier->active[0]->token
         );
 

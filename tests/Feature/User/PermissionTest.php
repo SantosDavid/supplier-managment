@@ -37,7 +37,7 @@ class PermissionTest extends TestCase
     }
 
     public function testSucceful()
-    {   
+    {
         $response = $this->json('GET', '/api/'. $this->company->id .'/suppliers');
 
 
