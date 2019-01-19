@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 
-class USerController extends Controller
+class UserLoginController extends Controller
 {
     public function login(LoginRequest $request)
     {

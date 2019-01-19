@@ -33,9 +33,9 @@ Route::group([
     Route::get('suppliers/total-monthly-payment', 'SupplierController@totalMonthlyPayment');
 });
 
-Route::post('administrators/login', 'Auth\AdministratorController@login');
+Route::post('administrators/login', 'Auth\AdminLoginController@login');
 
-Route::post('companies/login', 'Auth\UserController@login');
+Route::post('companies/login', 'Auth\UserLoginController@login');
 
 Route::get('companies/suppliers/activation/{token}', 'Company\ActivationSupplierController@activation')
     ->name('suppliers.activation');
