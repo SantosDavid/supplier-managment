@@ -23,7 +23,7 @@ class SupplierController extends Controller
     {
         $suppliers = SupplierResource::collection(Supplier::paginate(30));
 
-        return responseSuccess($suppliers, 201, '');
+        return responseSuccess($suppliers, 200, '');
     }
 
     public function store(SupplierRequest $request)

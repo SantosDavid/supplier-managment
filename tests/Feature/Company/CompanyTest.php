@@ -5,9 +5,12 @@ namespace Tests\Feature\Company;
 use App\Models\Administrator\Admin;
 use App\Models\Admin\Company;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CompanyTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp()
     {
         parent::setUp();
@@ -52,6 +55,12 @@ class CompanyTest extends TestCase
     public function testeCreateCompanyWithDuplicateCNPJ()
     {
         $company = factory(Company::class)->states('relationships')->make();
+
+        $this->json(
+            'POST',
+            'api/administrators/companies',
+            $company->toArray()
+        );
 
 
         $response = $this->json(
