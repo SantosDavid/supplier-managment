@@ -3,7 +3,7 @@
 namespace App\Observers\User;
 
 use Hash;
-use App\Models\User\User;
+use App\Models\Tenant\User;
 
 class UserObserver
 {

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Supplier;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Supplier\SupplierRequest;
 use App\Http\Resources\Company\SupplierResource;
-use App\Models\Company\Supplier;
-use App\Service\Company\Contrats\SupplierServiceContract;
+use App\Models\Tenant\Supplier;
+use App\Services\Supplier\Contrats\SupplierServiceContract;
 use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -49,9 +49,10 @@ class SupplierController extends Controller
 
             DB::beginTransaction();
 
-            $supplier->monthly_payment = $request->monthly_payment;
-
-            $supplier->save();
+            $this->service->updateMonthlyPayment(
+                $supplier,
+                $request->monthly_payment
+            );
 
             DB::commit();
 

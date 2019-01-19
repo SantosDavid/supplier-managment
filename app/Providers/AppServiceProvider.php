@@ -5,12 +5,15 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Administrator\Admin;
 use App\Observers\Administrator\AdminObserver;
-use App\Models\Company\{User, Supplier};
-use App\Observers\Company\{UserObserver, SupplierObserver};
-use App\Service\Company\Contrats\SupplierServiceContract;
-use App\Service\Company\SupplierService;
-use App\Repositories\Company\SupplierRepository;
-use App\Repositories\Company\Contracts\SupplierRepositoryContract;
+use App\Models\Tenant\{User, Supplier};
+use App\Observers\Supplier\SupplierObserver;
+use App\Observers\User\UserObserver;
+use App\Services\Supplier\Contrats\SupplierServiceContract;
+use App\Services\Supplier\SupplierService;
+use App\Repositories\Supplier\SupplierRepository;
+use App\Repositories\Supplier\Contracts\SupplierRepositoryContract;
+use App\Services\Admin\CompanyService;
+use App\Services\Admin\Contracts\CompanyServiceContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SupplierServiceContract::class, SupplierService::class);
         
         $this->app->bind(SupplierRepositoryContract::class, SupplierRepository::class);
+
+        $this->app->bind(CompanyServiceContract::class, CompanyService::class);
     }
 
     /**

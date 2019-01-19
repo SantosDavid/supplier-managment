@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Company\Company;
+use App\Models\Admin\Company;
 
 /*
 |--------------------------------------------------------------------------

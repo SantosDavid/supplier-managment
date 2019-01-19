@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Company\SupplierRepository;
+use App\Repositories\Supplier\Contracts\SupplierRepositoryContract;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class ActivationSupplierController extends Controller
 {
     private $repository;
 
-    public function __construct(SupplierRepository $repository)
+    public function __construct(SupplierRepositoryContract $repository)
     {
         $this->repository = $repository;
     }
@@ -24,15 +24,11 @@ class ActivationSupplierController extends Controller
 
             $supplier->actived();
 
-            return view('companies.suppliers.actived', compact('supplier'));
+            return responseSuccess([], 200, 'Ativação efetuada com sucesso!');
         } catch (NotFoundResourceException $e) {
-            $error = $e->getMessage();
-
-            return view('companies.suppliers.error', compact('error'));
+            return responseError([], 400, $e->getMessage());
         } catch (\Throwable $e) {
-            $error = config('errors.default');
-
-            return view('companies.suppliers.error', compact('error'));
+            return responseError([], 500, config('errors.default'));
         }
     }
 }

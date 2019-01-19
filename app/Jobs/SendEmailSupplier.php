@@ -8,9 +8,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Models\Company\Supplier;
+use App\Models\Tenant\Supplier;
 use App\Mail\ActiveSupplier as Email;
-use App\Models\Company\ActiveSupplier;
+use App\Models\Tenant\ActiveSupplier;
 
 class SendEmailSupplier implements ShouldQueue
 {

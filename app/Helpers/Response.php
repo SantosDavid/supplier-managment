@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('responseError')) {
-    function responseError($error, $code = 500)
+    function responseError($error = 'Erro interno do servidor', $code = 500)
     {
         return response(['message' => $error], $code);
     }

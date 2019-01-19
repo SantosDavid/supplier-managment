@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Address;
-use App\Models\Company\Company;
-use App\Models\Company\User;
+use App\Models\Admin\Company;
+use App\Models\Tenant\User;
 use Faker\Generator as Faker;
 
 $factory->define(Company::class, function (Faker $faker) {

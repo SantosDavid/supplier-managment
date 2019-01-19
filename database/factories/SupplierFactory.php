@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Company\Supplier;
+use App\Models\Tenant\Supplier;
 use Faker\Generator as Faker;
 
 $factory->define(Supplier::class, function (Faker $faker) {

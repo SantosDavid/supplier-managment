@@ -2,28 +2,31 @@
 
 namespace App\Http\Controllers\Administrator;
 
+use App\Services\Admin\Contracts\CompanyServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administrator\CompanyRequest;
 use App\Http\Resources\Company\CompanyResource;
-use App\Models\Company\Company;
 use DB;
 
 class CompanyController extends Controller
 {
+    private $service;
+
+    public function __construct(CompanyServiceContract $service)
+    {
+        $this->service = $service;
+    }
+
     public function store(CompanyRequest $request)
     {
         try {
             DB::beginTransaction();
 
-            $company = Company::create($request->all());
-
-            foreach ($request->addresses as $address) {
-                $company->addresses()->create($address);
-            }
-
-            foreach ($request->users as $user) {
-                $company->users()->create($user);
-            }
+            $company = $this->service->create(
+                $request->all(), 
+                $request->addresses, 
+                $request->users
+            );
 
             DB::commit();
 
