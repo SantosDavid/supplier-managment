@@ -6,6 +6,7 @@ if (!function_exists('random_unique')) {
         return str_random(rand($minimun, $maximum)) . uniqid();
     }
 }
+
 if (!function_exists('random_array_float')) {
     function random_array_float($length = 10)
     {

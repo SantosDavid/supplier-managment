@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Company;
+namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Company\SupplierRequest;
+use App\Http\Requests\Supplier\SupplierRequest;
 use App\Http\Resources\Company\SupplierResource;
 use App\Models\Company\Supplier;
 use App\Service\Company\Contrats\SupplierServiceContract;
@@ -23,7 +23,7 @@ class SupplierController extends Controller
     {
         $suppliers = SupplierResource::collection(Supplier::paginate(30));
 
-        return $this->responseSuccess($suppliers, 201, 'Fornecedor criado com sucesso!');
+        return responseSuccess($suppliers, 201, '');
     }
 
     public function store(SupplierRequest $request)
@@ -35,10 +35,10 @@ class SupplierController extends Controller
 
             DB::commit();
 
-            return $this->responseSuccess(new SupplierResource($supplier), 201, 'Fornecedor criado com sucesso!');
+            return responseSuccess(new SupplierResource($supplier), 201, 'Fornecedor criado com sucesso!');
         } catch (\Throwable $e) {
             DB::rollback();
-            return $this->responseError(config('errors.default'));
+            return responseError(config('errors.default'));
         }
     }
 
@@ -55,13 +55,13 @@ class SupplierController extends Controller
 
             DB::commit();
 
-            return $this->responseSuccess(new SupplierResource($supplier), 200, 'Fornecedor atualizado com sucesso!');
+            return responseSuccess(new SupplierResource($supplier), 200, 'Fornecedor atualizado com sucesso!');
         } catch (ModelNotFoundException $e) {
             DB::rollback();
-            return $this->responseError('Fornecedor não encontrado');
+            return responseError('Fornecedor não encontrado');
         } catch (\Throwable $e) {
             DB::rollback();
-            return $this->responseError(config('errors.default'));
+            return responseError(config('errors.default'));
         }
     }
 
@@ -70,10 +70,10 @@ class SupplierController extends Controller
         try {
             Supplier::destroy($id);
 
-            return $this->responseSuccess([], 200, 'Fornecedor deletado com sucesso!');
+            return responseSuccess([], 200, 'Fornecedor deletado com sucesso!');
         } catch (\Throwable $e) {
             DB::rollback();
-            return $this->responseError(config('errors.default'));
+            return responseError(config('errors.default'));
         }
     }
 
@@ -81,6 +81,6 @@ class SupplierController extends Controller
     {
         $total = $this->service->getTotalMonthlyPayment();
 
-        return $this->responseSuccess(['total' => $total], 200, '');
+        return responseSuccess(['total' => $total], 200, '');
     }
 }

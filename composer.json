@@ -37,7 +37,8 @@
     },
     "autoload": {
         "files": [
-            "app/Helpers/Random.php"
+            "app/Helpers/Random.php",
+            "app/Helpers/Response.php"
         ],
         "psr-4": {
             "App\\": "app/"

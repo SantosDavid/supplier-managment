@@ -26,7 +26,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth:users'],
     'prefix' => 'companies',
-    'namespace' => 'Company',
+    'namespace' => 'Supplier',
 ], function () {
     Route::resource('suppliers', 'SupplierController', ['except' => ['edit', 'show']]);
     
@@ -37,5 +37,5 @@ Route::post('administrators/login', 'Auth\AdminLoginController@login');
 
 Route::post('companies/login', 'Auth\UserLoginController@login');
 
-Route::get('companies/suppliers/activation/{token}', 'Company\ActivationSupplierController@activation')
+Route::get('companies/suppliers/activation/{token}', 'Supplier\ActivationSupplierController@activation')
     ->name('suppliers.activation');

@@ -13,10 +13,10 @@ class AdminLoginController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->guard('admins')->attempt($credentials)) {
-            return $this->responseError(['Não autorizado'], 401);
+            return responseError(['Não autorizado'], 401);
         }
 
-        return $this->responseSuccess([
+        return responseSuccess([
             'token' => $token,
             'expires' => auth()->guard('admins')->factory()->getTTL() * 60,
         ]);

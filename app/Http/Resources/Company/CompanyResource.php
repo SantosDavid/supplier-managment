@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Company;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\AddressResource;
 
 class CompanyResource extends JsonResource
 {

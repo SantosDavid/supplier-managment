@@ -27,14 +27,14 @@ class CompanyController extends Controller
 
             DB::commit();
 
-            return $this->responseSuccess(
+            return responseSuccess(
                 new CompanyResource($company),
                 201,
                 'Empresa cadastrada com sucesso!'
             );
         } catch (\Throwable $e) {
             DB::rollback();
-            return $this->responseError(config('errors.default'));
+            return responseError(config('errors.default'));
         }
     }
 }

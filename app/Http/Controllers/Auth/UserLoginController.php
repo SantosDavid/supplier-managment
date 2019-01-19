@@ -12,10 +12,10 @@ class UserLoginController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->guard('users')->attempt($credentials)) {
-            return $this->responseError(['Não autorizado'], 401);
+            return responseError(['Não autorizado'], 401);
         }
 
-        return $this->responseSuccess([
+        return responseSuccess([
             'token' => $token,
             'expires' => auth()->guard('users')->factory()->getTTL() * 60,
         ]);

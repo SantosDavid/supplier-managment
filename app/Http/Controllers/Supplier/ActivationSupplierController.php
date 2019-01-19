@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Company;
+namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Company\SupplierRepository;
