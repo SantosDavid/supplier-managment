@@ -12,14 +12,16 @@ class CompanyTest extends TestCase
     {
         parent::setUp();
 
-        $admin = factory(Admin::class)->create();
-
-        $this->actingAs($admin, 'admins');
+        $this->actingAs(
+            factory(Admin::class)->create(),
+            'admins'
+        );
     }
 
     public function testCreateCompanyWithWrongData()
     {
         $response = $this->json('POST', 'api/administrators/companies', []);
+
 
         $response
             ->assertStatus(422)
@@ -32,8 +34,14 @@ class CompanyTest extends TestCase
     {
         $company = factory(Company::class)->states('relationships')->raw();
 
-        $response = $this->json('POST', 'api/administrators/companies', $company);
 
+        $response = $this->json(
+            'POST',
+            'api/administrators/companies',
+            $company
+        );
+
+        
         $response
             ->assertStatus(201)
             ->assertJson([
@@ -45,7 +53,13 @@ class CompanyTest extends TestCase
     {
         $company = factory(Company::class)->states('relationships')->make();
 
-        $response = $this->json('POST', 'api/administrators/companies', $company->toArray());
+
+        $response = $this->json(
+            'POST',
+            'api/administrators/companies',
+            $company->toArray()
+        );
+
 
         $response->assertStatus(422);
     }

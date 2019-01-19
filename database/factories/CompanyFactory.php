@@ -13,7 +13,7 @@ $factory->define(Company::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
         'phone' => $phone,
-        'cnpj' => '21.325.516/0001-86',
+        'cnpj' => '17.446.237/0001-01',
     ];
 });
 

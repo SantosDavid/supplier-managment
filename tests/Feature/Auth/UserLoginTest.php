@@ -12,13 +12,15 @@ class UserLoginTest extends TestCase
 {
     use RefreshDatabase;
     
-    private $urlLogin = "api/1/login";
+    private $endpointLogin = "api/1/login";
 
     public function testWithAdmin()
     {
         $admin = factory(Admin::class)->create();
 
-        $response = $this->json('POST', $this->urlLogin, $admin->toArray());
+
+        $response = $this->json('POST', $this->endpointLogin, $admin->toArray());
+
 
         $response->assertStatus(401)
             ->assertJson([
@@ -28,12 +30,11 @@ class UserLoginTest extends TestCase
 
     public function testWrongData()
     {
-        $user = [
-            'email' => 'test@test.com.br',
-            'password' => '1231dfadf',
-        ];
+        $user = factory(User::class)->states('create')->raw();
 
-        $response = $this->json('POST', $this->urlLogin, $user);
+
+        $response = $this->json('POST', $this->endpointLogin, $user);
+
 
         $response->assertStatus(401)
             ->assertJson([
@@ -51,8 +52,10 @@ class UserLoginTest extends TestCase
             array_merge($user, ['company_id' => $company->id])
         );
 
+
         $response = $this->json('POST', "api/$company->id/login", $user);
 
+        
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => ['token'],

@@ -35,5 +35,5 @@ Route::post('administrators/login', 'Auth\AdminLoginController@login');
 
 Route::post('{company}/login', 'Auth\UserLoginController@login')->name('users.login');
 
-Route::get('companies/suppliers/activation/{token}', 'Supplier\ActivationSupplierController@activation')
+Route::get('suppliers/activation/{token}', 'Supplier\ActivationSupplierController@activation')
     ->name('suppliers.activation');

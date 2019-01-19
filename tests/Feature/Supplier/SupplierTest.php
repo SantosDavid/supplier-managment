@@ -19,32 +19,36 @@ class SupplierTest extends TestCase
 
     private $company;
 
-    private $urlSuppliers;
+    private $endpointSuppliers;
 
     public function setUp()
     {
         parent::setUp();
 
+
         $this->company = factory(Company::class)->create();
 
-        $this->urlSuppliers = "api/" . $this->company->id . "/suppliers/";
-
-        $user = factory(User::class)->raw();
-
         $this->user = $this->company->users()->create(
-            array_merge($user, ['company_id' => $this->company->id])
+            array_merge(
+                factory(User::class)->raw(),
+                ['company_id' => $this->company->id]
+            )
         );
 
+        
         $this->actingAs($this->user, 'users');
+
+
+        $this->endpointSuppliers = "api/" . $this->company->id . "/suppliers/";
     }
 
     public function testCreateWrongData()
     {
-        $supplier = [
-            'name' => 'dasdasd',
-        ];
+        $supplier = ['name' => 'dasdasd'];
 
-        $response = $this->json('POST', $this->urlSuppliers, $supplier);
+
+        $response = $this->json('POST', $this->endpointSuppliers, $supplier);
+
 
         $response
             ->assertStatus(422)
@@ -57,13 +61,27 @@ class SupplierTest extends TestCase
 
         $supplier = factory(Supplier::class)->raw();
 
-        $response = $this->json('POST', $this->urlSuppliers, $supplier);
+
+        $response = $this->json('POST', $this->endpointSuppliers, $supplier);
+
 
         $response
             ->assertStatus(201)
             ->assertJsonStructure(['message', 'data']);
+    }
 
-        $supplier = json_decode($response->getContent())->data;
+    public function testSendEmailDispatched()
+    {
+        Bus::fake();
+
+        $response = $this->json(
+            'POST',
+            $this->endpointSuppliers,
+            factory(Supplier::class)->raw()
+        );
+
+        $supplier = json_decode($response->content())->data;
+
 
         Bus::assertDispatched(SendEmailSupplier::class, function ($job) use ($supplier) {
             return $job->activation->supplier_id === $supplier->id;
@@ -78,7 +96,9 @@ class SupplierTest extends TestCase
 
         DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('PUT', $this->urlSuppliers . $supplier['id']);
+
+        $response = $this->json('PUT', $this->endpointSuppliers . $supplier['id']);
+
 
         $response->assertStatus(422);
     }
@@ -91,7 +111,9 @@ class SupplierTest extends TestCase
 
         DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('PUT', $this->urlSuppliers . $supplier['id'], ['monthly_payment' => 320.20]);
+
+        $response = $this->json('PUT', $this->endpointSuppliers . $supplier['id'], ['monthly_payment' => 320.20]);
+
 
         $response
             ->assertStatus(200)
@@ -108,7 +130,9 @@ class SupplierTest extends TestCase
 
         DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('DELETE', $this->urlSuppliers . $supplier['id']);
+
+        $response = $this->json('DELETE', $this->endpointSuppliers . $supplier['id']);
+
 
         $response
             ->assertStatus(200)
@@ -118,13 +142,18 @@ class SupplierTest extends TestCase
     public function testMonthlyPaymentReturnZero()
     {
         for ($i = rand(1, 3); $i < 16; $i++) {
-            $data = factory(Supplier::class)->raw();
-
-            $response = $this->json('POST', $this->urlSuppliers, $data);
+            $this->json(
+                'POST',
+                $this->endpointSuppliers,
+                factory(Supplier::class)->raw()
+            );
         }
 
-        $this->json('GET', $this->urlSuppliers . 'total-monthly-payment')
-            ->assertStatus(200)
+
+        $reponse = $this->json('GET', $this->endpointSuppliers . 'total-monthly-payment');
+            
+        
+        $reponse->assertStatus(200)
             ->assertJson([
                 'data' => ['total' => 0.00],
             ]);
@@ -144,8 +173,11 @@ class SupplierTest extends TestCase
             $payment += $supplier['monthly_payment'];
         }
 
-        $this->json('GET', $this->urlSuppliers . 'total-monthly-payment')
-            ->assertStatus(200)
+
+        $response = $this->json('GET', $this->endpointSuppliers . 'total-monthly-payment');
+        
+        
+        $response->assertStatus(200)
             ->assertJson([
                 'data' => ['total' => bcdiv($payment, 1, 2)],
             ]);

@@ -9,6 +9,6 @@
 <body>
     <h1>Seja bem-vindo, {{ $activation->supplier->name }}</h1>
 
-    <p>Para ser ativado <a href="{{ route('suppliers.activation', $activation->token) }}">click aqui</a></p>
+    <p>Para ser ativado <a href="{{ route('suppliers.activation', [$activation->token]) }}">click aqui</a></p>
 </body>
 </html>
