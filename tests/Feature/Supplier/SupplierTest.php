@@ -19,11 +19,15 @@ class SupplierTest extends TestCase
 
     private $company;
 
+    private $urlSuppliers;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->company = factory(Company::class)->create();
+
+        $this->urlSuppliers = "api/" . $this->company->id . "/suppliers/";
 
         $user = factory(User::class)->raw();
 
@@ -40,7 +44,7 @@ class SupplierTest extends TestCase
             'name' => 'dasdasd',
         ];
 
-        $response = $this->json('POST', 'api/companies/suppliers', $supplier);
+        $response = $this->json('POST', $this->urlSuppliers, $supplier);
 
         $response
             ->assertStatus(422)
@@ -53,7 +57,7 @@ class SupplierTest extends TestCase
 
         $supplier = factory(Supplier::class)->raw();
 
-        $response = $this->json('POST', 'api/companies/suppliers', $supplier);
+        $response = $this->json('POST', $this->urlSuppliers, $supplier);
 
         $response
             ->assertStatus(201)
@@ -74,7 +78,7 @@ class SupplierTest extends TestCase
 
         DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('PUT', 'api/companies/suppliers/' . $supplier['id']);
+        $response = $this->json('PUT', $this->urlSuppliers . $supplier['id']);
 
         $response->assertStatus(422);
     }
@@ -87,12 +91,12 @@ class SupplierTest extends TestCase
 
         DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('PUT', 'api/companies/suppliers/' . $supplier['id'], ['monthly_payment' => 320.20]);
+        $response = $this->json('PUT', $this->urlSuppliers . $supplier['id'], ['monthly_payment' => 320.20]);
 
         $response
             ->assertStatus(200)
             ->assertJson([
-                'data' => ['monthly_payment' => 320.20]
+                'data' => ['monthly_payment' => 320.20],
             ]);
     }
 
@@ -104,7 +108,7 @@ class SupplierTest extends TestCase
 
         DB::table('suppliers')->insert($supplier);
 
-        $response = $this->json('DELETE', 'api/companies/suppliers/' . $supplier['id']);
+        $response = $this->json('DELETE', $this->urlSuppliers . $supplier['id']);
 
         $response
             ->assertStatus(200)
@@ -116,10 +120,10 @@ class SupplierTest extends TestCase
         for ($i = rand(1, 3); $i < 16; $i++) {
             $data = factory(Supplier::class)->raw();
 
-            $response = $this->json('POST', 'api/companies/suppliers', $data);
+            $response = $this->json('POST', $this->urlSuppliers, $data);
         }
 
-        $this->json('GET', 'api/companies/suppliers/total-monthly-payment')
+        $this->json('GET', $this->urlSuppliers . 'total-monthly-payment')
             ->assertStatus(200)
             ->assertJson([
                 'data' => ['total' => 0.00],
@@ -140,7 +144,7 @@ class SupplierTest extends TestCase
             $payment += $supplier['monthly_payment'];
         }
 
-        $this->json('GET', 'api/companies/suppliers/total-monthly-payment')
+        $this->json('GET', $this->urlSuppliers . 'total-monthly-payment')
             ->assertStatus(200)
             ->assertJson([
                 'data' => ['total' => bcdiv($payment, 1, 2)],

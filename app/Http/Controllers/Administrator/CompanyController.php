@@ -23,15 +23,20 @@ class CompanyController extends Controller
             DB::beginTransaction();
 
             $company = $this->service->create(
-                $request->all(), 
-                $request->addresses, 
+                $request->all(),
+                $request->addresses,
                 $request->users
             );
 
             DB::commit();
 
+            $data = [
+                'url' => route('users.login', [$company->id]),
+                'company' => new CompanyResource($company),
+            ];
+
             return responseSuccess(
-                new CompanyResource($company),
+                $data,
                 201,
                 'Empresa cadastrada com sucesso!'
             );

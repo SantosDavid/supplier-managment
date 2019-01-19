@@ -15,7 +15,6 @@ class SupplierRequest extends FormRequest
     public function rules()
     {
         switch ($this->method()) {
-
             case 'POST':
                 return [
 
@@ -36,7 +35,6 @@ class SupplierRequest extends FormRequest
                 ];
 
             case 'PUT':
-
                 return [
                     'monthly_payment' => 'required|regex:/^[0-9]+(\.[0-9]{1,2})?$/',
                 ];

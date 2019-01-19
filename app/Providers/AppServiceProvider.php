@@ -5,7 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Administrator\Admin;
 use App\Observers\Administrator\AdminObserver;
-use App\Models\Tenant\{User, Supplier};
+use App\Models\Tenant\User;
+use App\Models\Tenant\Supplier;
 use App\Observers\Supplier\SupplierObserver;
 use App\Observers\User\UserObserver;
 use App\Services\Supplier\Contrats\SupplierServiceContract;
@@ -44,6 +45,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Admin\Company;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,8 +22,8 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth:users'],
-    'prefix' => 'companies',
+    'middleware' => ['auth:users', 'user.has.permission'],
+    'prefix' => '{company}',
     'namespace' => 'Supplier',
 ], function () {
     Route::resource('suppliers', 'SupplierController', ['except' => ['edit', 'show']]);
@@ -35,7 +33,7 @@ Route::group([
 
 Route::post('administrators/login', 'Auth\AdminLoginController@login');
 
-Route::post('companies/login', 'Auth\UserLoginController@login');
+Route::post('{company}/login', 'Auth\UserLoginController@login')->name('users.login');
 
 Route::get('companies/suppliers/activation/{token}', 'Supplier\ActivationSupplierController@activation')
     ->name('suppliers.activation');

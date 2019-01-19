@@ -37,9 +37,9 @@ class CompanyRequest extends FormRequest
             
             'addresses.*.type' => [
                 
-                'required', 
+                'required',
                 
-                'string', 
+                'string',
                 
                 Rule::in(['thirst', 'subsidiary'])
             ],

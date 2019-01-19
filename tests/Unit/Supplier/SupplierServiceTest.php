@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Supplier;
 
+use App\Repositories\Supplier\SupplierRepository;
 use App\Services\Supplier\SupplierService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
-use App\Repositories\Supplier\SupplierRepository;
 
 class SupplierServiceTest extends TestCase
 {
@@ -14,15 +14,10 @@ class SupplierServiceTest extends TestCase
 
     private $repositoryMock;
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->repositoryMock = Mockery::mock(SupplierRepository::class);
-    }
-
     public function testgetTotalMonthlyPayment()
     {
+        $this->repositoryMock = Mockery::mock(SupplierRepository::class);
+
         $payment = collect(random_array_float());
 
         $this
@@ -30,11 +25,13 @@ class SupplierServiceTest extends TestCase
             ->shouldReceive('allMonthlyPayment')
             ->once()
             ->andReturn($payment);
-
+            
         $service = new SupplierService($this->repositoryMock);
+
 
         $total = $service->getTotalMonthlyPayment();
 
+        
         $this->assertEquals($payment->sum(), $total);
     }
 }

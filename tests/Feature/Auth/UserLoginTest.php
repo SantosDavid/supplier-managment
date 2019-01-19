@@ -12,11 +12,13 @@ class UserLoginTest extends TestCase
 {
     use RefreshDatabase;
     
+    private $urlLogin = "api/1/login";
+
     public function testWithAdmin()
     {
         $admin = factory(Admin::class)->create();
 
-        $response = $this->json('POST', 'api/companies/login', $admin->toArray());
+        $response = $this->json('POST', $this->urlLogin, $admin->toArray());
 
         $response->assertStatus(401)
             ->assertJson([
@@ -31,7 +33,7 @@ class UserLoginTest extends TestCase
             'password' => '1231dfadf',
         ];
 
-        $response = $this->json('POST', 'api/companies/login', $user);
+        $response = $this->json('POST', $this->urlLogin, $user);
 
         $response->assertStatus(401)
             ->assertJson([
@@ -49,7 +51,7 @@ class UserLoginTest extends TestCase
             array_merge($user, ['company_id' => $company->id])
         );
 
-        $response = $this->json('POST', 'api/companies/login', $user);
+        $response = $this->json('POST', "api/$company->id/login", $user);
 
         $response->assertStatus(200)
             ->assertJsonStructure([
