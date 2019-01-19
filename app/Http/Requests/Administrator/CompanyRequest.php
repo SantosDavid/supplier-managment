@@ -47,7 +47,7 @@ class CompanyRequest extends FormRequest
             
             'users' => 'required|array',
 
-            'users.*.email' => 'required|string',
+            'users.*.email' => 'required|string|unique:users,email',
 
             'users.*.password' => 'required|string|min:6|max:40|confirmed',
         ];

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Company;
+namespace App\Http\Resources\Administrator;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\AddressResource;
+use App\Http\Resources\Tenant\UserResource;
 
 class CompanyResource extends JsonResource
 {

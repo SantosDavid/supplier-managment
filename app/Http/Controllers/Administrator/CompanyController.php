@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Administrator;
 use App\Services\Admin\Contracts\CompanyServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Administrator\CompanyRequest;
-use App\Http\Resources\Company\CompanyResource;
+use App\Http\Resources\Administrator\CompanyResource;
 use DB;
 
 class CompanyController extends Controller
@@ -41,6 +41,7 @@ class CompanyController extends Controller
                 'Empresa cadastrada com sucesso!'
             );
         } catch (\Throwable $e) {
+            dd($e);
             DB::rollback();
             return responseError(config('errors.default'));
         }

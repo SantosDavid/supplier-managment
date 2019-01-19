@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Supplier;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Supplier\SupplierRequest;
-use App\Http\Resources\Company\SupplierResource;
+use App\Http\Resources\Tenant\SupplierResource;
 use App\Models\Tenant\Supplier;
 use App\Services\Supplier\Contrats\SupplierServiceContract;
 use DB;
