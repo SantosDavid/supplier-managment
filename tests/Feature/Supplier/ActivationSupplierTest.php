@@ -9,10 +9,12 @@ use App\Models\Admin\Company;
 use App\Models\Tenant\User;
 use App\Models\Tenant\Supplier;
 use Bus;
+use Tests\Seeder;
 
 class ActivationSupplierTest extends TestCase
 {
     use RefreshDatabase;
+    use Seeder;
 
     private $endpoint = 'api/suppliers/activation/';
 
@@ -28,16 +30,11 @@ class ActivationSupplierTest extends TestCase
     {
         Bus::fake();
 
-        $company = factory(Company::class)->create();
+        $this->runSeeder(['CompaniesTableSeeder', 'UsersTableSeeder']);
 
-        $user = $company->users()->create(
-            array_merge(
-                factory(User::class)->raw(),
-                ['company_id' => $company->id]
-            )
-        );
+        $company = Company::first();
 
-        $this->actingAs($user, 'users');
+        $this->actingAs($company->users[0], 'users');
 
         $response = $this->json(
             'POST',

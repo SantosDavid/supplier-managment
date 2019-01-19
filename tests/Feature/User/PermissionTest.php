@@ -6,10 +6,12 @@ use Tests\TestCase;
 use App\Models\Admin\Company;
 use App\Models\Tenant\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Seeder;
 
 class PermissionTest extends TestCase
 {
     use RefreshDatabase;
+    use Seeder;
     
     private $company;
 
@@ -17,15 +19,11 @@ class PermissionTest extends TestCase
     {
         parent::setUp();
 
-        $this->company = factory(Company::class)->create();
+        $this->runSeeder(['CompaniesTableSeeder', 'UsersTableSeeder']);
 
-        $user = factory(User::class)->raw();
+        $this->company = Company::first();
 
-        $this->company->users()->create(
-            array_merge($user, ['company_id' => $this->company->id])
-        );
-
-        $this->actingAs(User::first(), 'users');
+        $this->actingAs($this->company->users[0], 'users');
     }
 
     public function testAccessAnotherCompany()
