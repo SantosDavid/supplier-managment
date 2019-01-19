@@ -32,6 +32,10 @@
 
     7 - docker-compose run app php artisan migrate --seed
 
+## Verificar coding style
+
+    1 - docker-compose run app  ./vendor/bin/phpcbf app/ --standard=PSR2
+
 
 ## Testes
 
