@@ -1,0 +1,43 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:7.2-node-browsers
+    steps:
+      - checkout
+
+      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo docker-php-ext-install zip
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+      
+      - run: docker-compose up -d
+      - run: docker-compose run app composer install
+      - run: cp .env.example .env
+      - run: docker-compose run app php artisan key:generate
+      - run: docker-compose run app php artisan jwt:secret
+
+      # prepare the database
+      - run: docker-compose run app php artisan migrate --seed --env=testing
+
+      # run tests with phpunit or codecept
+      - run: docker-compose run app  ./vendor/bin/phpcbf app/ --standard=PSR2
+      - run: docker-compose run app vendor/bin/phpunit
