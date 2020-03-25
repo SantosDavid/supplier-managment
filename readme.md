@@ -1,6 +1,6 @@
 # Projeto para gerenciamento de fornecedores
 
-https://travis-ci.org/SantosDavid/supplier-managment.svg?branch=master
+[![Build Status](https://travis-ci.org/SantosDavid/supplier-managment.svg?branch=master)](https://travis-ci.org/SantosDavid/supplier-managment)
 
 ### Regras de negócio:
 
