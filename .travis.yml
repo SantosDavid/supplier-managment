@@ -10,7 +10,7 @@ before_install:
    - chmod 777 storage -R
    - chmod 777 bootstrap -R
    - chmod 777 .env
-   - docker exec -it managment-app composer config -g github-oauth.github.com 79cfdef8edaab0657e3fa0df540ec13f38219a7a
+   - docker exec -it managment-app composer config -g github-oauth.github.com $GITHUB_TOKEN
    - docker exec -it managment-app composer install
    - docker exec -it managment-app php artisan key:generate
    - docker exec -it managment-app php artisan jwt:secret
