@@ -1,5 +1,7 @@
 # Projeto para gerenciamento de fornecedores
 
+https://travis-ci.org/SantosDavid/supplier-managment.svg?branch=master
+
 ### Regras de negócio:
 
     1 - Para utilizar a API o usuário deve estar cadastrado e autenticado no sistema.
