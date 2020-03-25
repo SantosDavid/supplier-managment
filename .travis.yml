@@ -6,6 +6,7 @@ services:
 before_install:
    - cp .env.example .env
    - docker-compose up -d --build
+   - mkdir -m 777 vendor
    - docker-compose run app composer install
    - docker-compose run app php artisan key:generate
    - docker-compose run app php artisan jwt:secret
