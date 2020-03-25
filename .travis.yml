@@ -1,1 +1,16 @@
 language: php
+
+services:
+    - docker
+
+before_install:
+   - cp .env.example .env
+   - docker-compose up -d --build
+   - docker-compose run app composer install
+   - docker-compose run app php artisan key:generate
+   - docker-compose run app php artisan jwt:secret
+   - docker-compose run app php artisan migrate --seed --env=testing
+   
+script:
+   - docker-compose run app  ./vendor/bin/phpcbf app/ --standard=PSR2
+   - docker-compose run app vendor/bin/phpunit
